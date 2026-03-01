@@ -7,13 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Base64;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-
-import org.apache.commons.codec.binary.Base64;
-
-import sun.misc.BASE64Encoder;
 
 
 
@@ -49,16 +46,15 @@ public class WordImageConvertor {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
 		//读取文件
-		
-		//BufferedInputStream bi=new BufferedInputStream(in);
-        Base64 base64=new Base64();
-		BASE64Encoder encoder=new BASE64Encoder();
 		byte[] temp = new byte[1024];
         for(int len = input.read(temp); len != -1;len = input.read(temp)){
             out.write(temp, 0, len);
-
         }
-        pictureBuffer.append(new String( base64.encodeBase64Chunked(out.toByteArray())));
+        input.close();
+        
+        // 使用 java.util.Base64 替代 sun.misc.BASE64Encoder
+        Base64.Encoder encoder = Base64.getMimeEncoder();
+        pictureBuffer.append(encoder.encodeToString(out.toByteArray()));
 		
 		return pictureBuffer.toString();
 	}
@@ -102,17 +98,6 @@ public class WordImageConvertor {
 		sb1.append("</v:shape>");
 		sb1.append("<![endif]-->");
 		
-		//以下是为了兼容游览器显示时的效果，但是如果是纯word阅读的话没必要这么做。
-	/*	StringBuilder sb2=new StringBuilder();
-		sb2.append(" <![if !vml]>");
-		
-		sb2.append("<img width=3D"+imageWidth +" height=3D" +imageHeight +
-				  " src=3D\"" + srcLocationShortName +"\" alt=" +imageFielShortName+
-				  " v:shapes=3D\"" + shapeid +"\">");
-		
-		sb2.append("<![endif]>");*/
-		
-		//return sb1.toString()+sb2.toString();
 		return sb1.toString();
 	}
 	
@@ -130,14 +115,6 @@ public class WordImageConvertor {
 	*/ 
 	public static String generateImageBase64Block(String nextPartId,String contextLoacation,
 									String fileTypeName,String base64Content){
-		/*--=_NextPart_01D188DB.E436D870
-				Content-Location: file:///C:/70ED9946/file9462.files/image001.jpg
-				Content-Transfer-Encoding: base64
-				Content-Type: image/jpeg
-				
-				base64Content
-		*/
-		
 		StringBuilder sb=new StringBuilder();
 		sb.append("\n");
 		sb.append("\n");

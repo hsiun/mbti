@@ -28,7 +28,7 @@ public class QuizController {
     @GetMapping("/list")
     public RespResult list() {
         List<QuizTestEntity> list = quizService.listTests();
-        return RespResult.success(list);
+        return new RespResult(RespResult.SUCCESS, list);
     }
 
     /**
@@ -37,7 +37,7 @@ public class QuizController {
     @GetMapping("/detail/{testId}")
     public RespResult detail(@PathVariable("testId") Long testId) {
         QuizTestVO vo = quizService.getTestDetail(testId);
-        return RespResult.success(vo);
+        return new RespResult(RespResult.SUCCESS, vo);
     }
 
     /**
@@ -46,7 +46,7 @@ public class QuizController {
     @PostMapping("/submit")
     public RespResult submit(@RequestBody QuizSubmitDTO submitDTO) {
         QuizResultVO result = quizService.submitAnswer(submitDTO);
-        return RespResult.success(result);
+        return new RespResult(RespResult.SUCCESS, result);
     }
 
     /**
@@ -56,6 +56,6 @@ public class QuizController {
     public RespResult history(@RequestParam(required = false) Long userId,
                               @RequestParam(required = false) Long testId) {
         List<QuizResultVO> list = quizService.getHistory(userId, testId);
-        return RespResult.success(list);
+        return new RespResult(RespResult.SUCCESS, list);
     }
 }
