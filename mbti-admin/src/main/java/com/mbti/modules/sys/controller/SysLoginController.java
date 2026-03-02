@@ -5,7 +5,6 @@
 package com.mbti.modules.sys.controller;
 
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.mbti.common.utils.R;
@@ -60,21 +59,24 @@ public class SysLoginController {
 	@ResponseBody
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
 	public R login(String mobile, String password, String captcha) {
+		// 验证码校验（暂时注释，方便测试）
 //		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 //		if(!captcha.equalsIgnoreCase(kaptcha)){
 //			return R.error("验证码不正确");
 //		}
 		
 		try{
-//			Subject subject = ShiroUtils.getSubject();
-//			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-//			System.out.println(token);
-//			subject.login(token);
+			// 查询用户
 			SysUserEntity user = sysUserService.getByMobile(mobile);
 			if(null == user){
 				return R.error("账号不存在");
 			}
-
+			
+			// 使用Shiro进行认证
+			Subject subject = ShiroUtils.getSubject();
+			UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), password);
+			subject.login(token);
+			
 		}catch (UnknownAccountException e) {
 			return R.error(e.getMessage());
 		}catch (IncorrectCredentialsException e) {
