@@ -30,7 +30,7 @@ export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH
 
 ```sql
 CREATE DATABASE IF NOT EXISTS mbti DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-CREATE USER IF NOT EXISTS 'mbti'@'localhost' IDENTIFIED BY 'Mbti@2026#Pass';
+CREATE USER IF NOT EXISTS 'mbti'@'localhost' IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON mbti.* TO 'mbti'@'localhost';
 FLUSH PRIVILEGES;
 ```
