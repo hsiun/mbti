@@ -38,3 +38,9 @@ buildNumber.properties
 # OS
 .DS_Store
 Thumbs.db
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea/
+target/
+*.iml

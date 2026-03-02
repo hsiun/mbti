@@ -20,11 +20,17 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.mbti</groupId>
 			<artifactId>mbti.common</artifactId>
 			<version>4.0.0</version>
 		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
 		<!-- 集群环境，需要打开注释 -->
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.session</groupId>-->
